@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean class="com.ganesh.ws.ResonseSignatureInterceptor"  />
+	<bean id="myPasswordCallback" name="myPasswordCallback"	class="com.ganesh.ws.ServerPasswordCallback"></bean>
+
+
+	<jaxws:endpoint id="FundTranferManager"
+		implementor="com.ganesh.ws.FundTranferManagerImpl" address="FundTranferManager">
+		
+		<jaxws:properties>
+			<entry key="ws-security.cache.config.file" value="/cxf-ehcache.xml" />
+		</jaxws:properties>
+
+
+		<jaxws:inInterceptors>
+			<bean class="org.apache.cxf.ws.security.wss4j.DefaultCryptoCoverageChecker" />
+			<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+				<constructor-arg>
+					<map>
+						<entry key="action" value="Signature" />
+						<entry key="signaturePropFile" value="incomin_cert.properties" />
+						<entry key="passwordCallbackClass" 	value="com.ganesh.ws.ServerPasswordCallback" />						
+					</map>
+				</constructor-arg>
+			</bean>
+		</jaxws:inInterceptors>
+
+		<jaxws:outInterceptors>
+			<bean class="com.ganesh.ws.ResonseSignatureInterceptor"
+				autowire="byType">
+			</bean>
+		</jaxws:outInterceptors>
+	</jaxws:endpoint>
+
+
+</beans>

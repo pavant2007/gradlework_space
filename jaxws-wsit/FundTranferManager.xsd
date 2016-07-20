@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10 svn-revision#919b322c92f13ad085a933e8dd6dd35d4947364b. --><xs:schema xmlns:tns="http://ws.ganesh.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.ganesh.com/">
+
+<xs:element name="initiateFundTransfer" nillable="true" type="tns:InitiateFundTransfer"/>
+
+<xs:element name="initiateFundTransferResponse" nillable="true" type="tns:InitiateFundTransferResponse"/>
+
+<xs:complexType name="InitiateFundTransfer">
+<xs:sequence>
+<xs:element name="initiateFundTransferRequest" type="tns:InitiateFundTransferRequest"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InitiateFundTransferRequest">
+<xs:sequence>
+<xs:element name="amount" type="xs:string" minOccurs="0"/>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InitiateFundTransferResponse">
+<xs:sequence>
+<xs:element name="InitiateFundTransferReply" type="tns:InitiateFundTransferReply"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InitiateFundTransferReply">
+<xs:sequence>
+<xs:element name="amount" type="xs:string" minOccurs="0"/>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

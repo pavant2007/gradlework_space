@@ -1,0 +1,62 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wns="http://ws.sosnoski.com/library/wsdl"
+	xmlns:tns="http://ws.ganesh.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://ws.sosnoski.com/library/wsdl">
+	<wsp:Policy wsu:Id="UsernameToken">
+		<wsss:ValidatorConfiguration
+			wspp:visibility="private">
+			<wsss:Validator name="usernameValidator"
+				classname="com.sosnoski.ws.library.metro.PasswordValidator" />
+		</wsss:ValidatorConfiguration>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="SymmEncr">
+		<wsss:KeyStore wspp:visibility="private" location="server.keystore"
+			storepass="nosecret" alias="serverkey"
+			keypass="com.sosnoski.ws.library.metro.KeystoreAccess" />
+	</wsp:Policy>
+
+
+	<wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://ws.ganesh.com/"
+				schemaLocation="FundTranferManager.xsd" />
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="initiateFundTransfer">
+		<wsdl:part name="parameters" element="tns:initiateFundTransfer" />
+	</wsdl:message>
+	<wsdl:message name="initiateFundTransferResponse">
+		<wsdl:part name="parameters" element="tns:initiateFundTransferResponse" />
+	</wsdl:message>
+	<wsdl:portType name="FundTranferManagerImpl">
+		<wsdl:operation name="initiateFundTransfer">
+			<wsdl:input
+				wsam:Action="http://ws.ganesh.com/FundTranferManagerImpl/initiateFundTransferRequest"
+				message="tns:initiateFundTransfer" />
+			<wsdl:output
+				wsam:Action="http://ws.ganesh.com/FundTranferManagerImpl/initiateFundTransferResponse"
+				message="tns:initiateFundTransferResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="FundTranferManagerImplPortBinding"
+		type="tns:FundTranferManagerImpl">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<wsdl:operation name="initiateFundTransfer">
+			<soap:operation soapAction="" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FundTranferManagerImplService">
+		<wsdl:port name="FundTranferManagerImplPort" binding="tns:FundTranferManagerImplPortBinding">
+			<soap:address location="http://localhost/FundTranferManager" />
+		</wsdl:port>
+	</wsdl:service>
+
+
+</wsdl:definitions>
